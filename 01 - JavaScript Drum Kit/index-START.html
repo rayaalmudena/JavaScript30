@@ -58,7 +58,19 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
-
+ 
+function playDown(e){
+  console.log(event.which);
+  document.querySelector("audio[data-key='"+event.which+"']").play();
+  document.querySelector(".key[data-key='"+event.which+"']").style.boxShadow = "0px 0px 30px red";
+  
+}
+function playUp(e) {
+  document.querySelector(".key[data-key='"+event.which+"']").style.boxShadow = "0px 0px 0px";
+  
+}
+document.onkeydown = playDown;
+document.onkeyup = playUp;
 </script>
 
 

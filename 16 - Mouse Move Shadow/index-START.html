@@ -1,40 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Mouse Shadow</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
 </head>
+<style>
+    img {
+        -webkit-filter: drop-shadow(10px 10px 0px #222);
+        filter: drop-shadow(10px 10px 0px #222);
+        
+    }
+
+    .hero {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: black;
+    }
+</style>
+
 <body>
+    <div class="hero">
+        <img src="https://cdn.pixabay.com/photo/2017/09/01/00/15/png-2702691_960_720.png" />
+    </div>
 
-  <div class="hero">
-    <h1 contenteditable>🔥WOAH!</h1>
-  </div>
+    <script>
+        const hero = document.querySelector('.hero');
+        const text = hero.querySelector('img');
+        const walk = 80; // 500px
 
-  <style>
-  html {
-    color: black;
-    font-family: sans-serif;
-  }
+        function shadow(e) {
+          
+            let { offsetX: x, offsetY: y } = e;
 
-  body {
-    margin: 0;
-  }
+            if (this !== e.target) {
+                x = x + e.target.offsetLeft;
+                y = y + e.target.offsetTop;
+            }
+            moveshadow(x,y); 
+        }
 
-  .hero {
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: black;
-  }
+        function moveshadow(x,y){
+            const { offsetWidth: width, offsetHeight: height } = hero;
+            const xWalk = Math.round((x / width * walk) - (walk / 2));
+            const yWalk = Math.round((y / height * walk) - (walk / 2));
 
-  h1 {
-    text-shadow: 10px 10px 0 rgba(0,0,0,1);
-    font-size: 100px;
-  }
-  </style>
 
-<script>
-</script>
+            text.setAttribute("style", `filter: 
+            drop-shadow(${xWalk}px ${yWalk}px 0 rgba(255,0,255,0.7))
+            drop-shadow(${xWalk * -1}px ${yWalk}px 0 rgba(0,255,255,0.7))
+            drop-shadow(${yWalk}px ${xWalk * -1}px 0 rgba(0,255,0,0.7))
+            drop-shadow(${yWalk * -1}px ${xWalk}px 0 rgba(0,0,255,0.7))
+            `);
+        }
+        function getRandomNumber() {
+
+            return Math.floor(Math.random()*500);
+            
+        }
+
+        function getRandomColor(){
+            return "#" + Math.floor(Math.random()*16777215).toString(16);
+        }
+
+        hero.addEventListener('mousemove', shadow);
+        // setInterval(()=>{
+        //     moveshadow(getRandomNumber(),getRandomNumber())
+        // }, 1000)
+
+    </script>
 </body>
+
 </html>
